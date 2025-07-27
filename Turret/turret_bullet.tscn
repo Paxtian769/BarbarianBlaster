@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dinip7f1vigtp"]
+
+[ext_resource type="Script" uid="uid://cgne1kc6m4he1" path="res://Turret/turret_bullet.gd" id="1_583sn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_knimc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_583sn"]
+albedo_color = Color(0.73, 0.073, 0.073, 1)
+emission_enabled = true
+emission = Color(0.729412, 0.0745098, 0.0745098, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_60nlc"]
+material = SubResource("StandardMaterial3D_583sn")
+
+[node name="TurretBullet" type="Area3D"]
+top_level = true
+script = ExtResource("1_583sn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_knimc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_60nlc")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,149 @@
+[gd_scene load_steps=15 format=3 uid="uid://dw8ffyo73vxya"]
+
+[ext_resource type="PackedScene" uid="uid://dpm3hgf0vp4qj" path="res://RayPickerCamera/ray_picker_camera.tscn" id="1_0a5y4"]
+[ext_resource type="MeshLibrary" uid="uid://dhtfnsbkni8ln" path="res://MeshLibraries/SpaceLibrary.tres" id="1_c57mx"]
+[ext_resource type="PackedScene" uid="uid://yac5m74ryf7x" path="res://EnemyScenes/barbarian_enemy.tscn" id="2_ctdcu"]
+[ext_resource type="Script" uid="uid://di1sh8xjcsto2" path="res://path_3d.gd" id="2_reens"]
+[ext_resource type="PackedScene" uid="uid://bo8il7peb3m0n" path="res://base.tscn" id="3_646pq"]
+[ext_resource type="Script" uid="uid://cthk312r4kwna" path="res://turret_manager.gd" id="6_8rhms"]
+[ext_resource type="PackedScene" uid="uid://dvwcvy43gysxe" path="res://Turret/turret.tscn" id="7_ucx4l"]
+[ext_resource type="Script" uid="uid://bwfb6qdokers2" path="res://bank_control.gd" id="8_agx4c"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s4aeo"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_c57mx"]
+sky_material = SubResource("ProceduralSkyMaterial_s4aeo")
+
+[sub_resource type="Environment" id="Environment_ctdcu"]
+background_mode = 2
+sky = SubResource("Sky_c57mx")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ctdcu"]
+albedo_color = Color(0.196078, 0.188235, 0.0392157, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_c57mx"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.932713, 0, 1.14469, 0.932713, 0, -1.14469, 35.1678, 0, -0.451836, 0.890316, 0, 1.14469, -0.890316, 0, -1.14469, 35.3797, 0, -7.40479, 0.952223, 0, 0.891979, -0.952223, 0, -0.891979, 12.4435, 0, -8.16792, 0, 0, 0, 0, 0, 0, 12, 0, -12),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_ucx4l"]
+font_size = 64
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[node name="level_base" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ctdcu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+size = Vector3(100, 2, 100)
+material = SubResource("StandardMaterial3D_ctdcu")
+
+[node name="RayPickerCamera" parent="." node_paths=PackedStringArray("grid_map", "turret_manager") instance=ExtResource("1_0a5y4")]
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 18, 9.5)
+grid_map = NodePath("../GridMap")
+turret_manager = NodePath("../TurretManager")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_c57mx")
+cell_size = Vector3(4, 4, 4)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65535, 65534, 0, 65535, 2, 0, 65531, 65535, 0, 4, 65535, 0, 65531, 65534, 0, 65531, 0, 0, 65531, 2, 0, 65532, 65534, 0, 65532, 2, 0, 65533, 2, 0, 65534, 65534, 0, 65534, 2, 0, 0, 65534, 0, 0, 2, 0, 1, 65534, 0, 1, 2, 0, 2, 65534, 0, 2, 2, 0, 3, 65534, 0, 3, 2, 0, 4, 65534, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 65532, 65535, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0)
+}
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 6)
+curve = SubResource("Curve3D_c57mx")
+script = ExtResource("2_reens")
+
+[node name="Road" type="CSGPolygon3D" parent="Path3D"]
+polygon = PackedVector2Array(-1, 0, -1, 0.1, 1, 0.1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="LeftEdge" type="CSGPolygon3D" parent="Path3D"]
+polygon = PackedVector2Array(-1.1, 0, -1.1, 0.2, -0.9, 0.2, -0.9, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="RightEdge" type="CSGPolygon3D" parent="Path3D"]
+polygon = PackedVector2Array(0.9, 0, 0.9, 0.2, 1.1, 0.2, 1.1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="SpawnTimer" type="Timer" parent="Path3D"]
+autostart = true
+
+[node name="barbarian_enemy" parent="Path3D" instance=ExtResource("2_ctdcu")]
+transform = Transform3D(0.0128468, 0, -0.999909, 0, 1, 0, 0.999909, 0, 0.0128468, 0, 0, 0)
+
+[node name="Base" parent="." instance=ExtResource("3_646pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -6)
+
+[node name="TurretManager" type="Node3D" parent="." node_paths=PackedStringArray("enemy_path")]
+script = ExtResource("6_8rhms")
+turret = ExtResource("7_ucx4l")
+enemy_path = NodePath("../Path3D")
+
+[node name="BankControl" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(16, 16)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("8_agx4c")
+
+[node name="Label" type="Label" parent="BankControl"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Gold: 50"
+label_settings = SubResource("LabelSettings_ucx4l")
+
+[connection signal="timeout" from="Path3D/SpawnTimer" to="Path3D" method="_spawn_new_enemy"]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://yac5m74ryf7x"]
+
+[ext_resource type="Script" uid="uid://b18646iqqkym" path="res://EnemyScenes/barbarian_enemy.gd" id="1_3abus"]
+[ext_resource type="Script" uid="uid://byagnwb8jn0pp" path="res://EnemyScenes/enemy_area_3d.gd" id="2_biufo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c57mx"]
+radius = 1.0
+height = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_biufo"]
+no_depth_test = true
+shading_mode = 0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3abus"]
+radius = 1.0
+height = 3.0
+
+[sub_resource type="Animation" id="Animation_xlyb3"]
+resource_name = "Hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageHighlight:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_e0wme"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageHighlight:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wxav4"]
+_data = {
+&"Hit": SubResource("Animation_xlyb3"),
+&"RESET": SubResource("Animation_e0wme")
+}
+
+[node name="barbarian_enemy" type="PathFollow3D" groups=["Enemy"]]
+transform = Transform3D(0.0128469, 0, -0.999917, 0, 1, 0, 0.999917, 0, 0.0128469, 0, 0, 0)
+loop = false
+script = ExtResource("1_3abus")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CapsuleMesh_c57mx")
+
+[node name="DamageHighlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_c57mx")
+surface_material_override/0 = SubResource("StandardMaterial3D_biufo")
+
+[node name="EnemyArea3D" type="Area3D" parent="." groups=["Enemy"]]
+script = ExtResource("2_biufo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("CapsuleShape3D_3abus")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wxav4")
+}
