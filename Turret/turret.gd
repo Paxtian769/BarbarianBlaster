@@ -25,14 +25,13 @@ func _physics_process(_delta: float) -> void:
 				if dist_to_enemy < dist_to_closest:
 					closest_enemy = enemy
 	if closest_enemy.is_in_group("Enemy"):
-		look_at(closest_enemy.global_position)
-		rotation.y = rotation.y + PI
+		$TurretBase/TurretTop.look_at(closest_enemy.global_position)
 
 
 func _on_timer_timeout() -> void:
 	if closest_enemy and closest_enemy.is_in_group("Enemy"):
 		var new_bullet = bullet_scene.instantiate()
-		new_bullet.position = $FirePosition.global_position
+		new_bullet.position = $TurretBase/TurretTop/FirePosition.global_position
 		add_child(new_bullet)
 		new_bullet.direction = closest_enemy.global_position - global_position
 		animation_player.play("Fire")

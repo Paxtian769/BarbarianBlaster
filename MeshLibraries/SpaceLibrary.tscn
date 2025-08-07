@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://0ul3g46naru"]
+[gd_scene load_steps=8 format=3 uid="uid://0ul3g46naru"]
+
+[ext_resource type="PackedScene" uid="uid://by63q42onkgal" path="res://Assets/Tree.glb" id="1_05dan"]
+[ext_resource type="PackedScene" uid="uid://dsk86mcfjkr1m" path="res://Assets/Rocks.glb" id="2_pou1f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2a4ik"]
-albedo_color = Color(0.787759, 0.787759, 0.787759, 1)
+transparency = 1
+albedo_color = Color(0.364706, 0.364706, 0.364706, 0.494118)
 
 [sub_resource type="BoxMesh" id="BoxMesh_e2761"]
 material = SubResource("StandardMaterial3D_2a4ik")
@@ -11,7 +15,8 @@ size = Vector3(4, 0.1, 4)
 data = PackedVector3Array(-2, 0.05, 2, 2, 0.05, 2, -2, -0.05, 2, 2, 0.05, 2, 2, -0.05, 2, -2, -0.05, 2, 2, 0.05, -2, -2, 0.05, -2, 2, -0.05, -2, -2, 0.05, -2, -2, -0.05, -2, 2, -0.05, -2, 2, 0.05, 2, 2, 0.05, -2, 2, -0.05, 2, 2, 0.05, -2, 2, -0.05, -2, 2, -0.05, 2, -2, 0.05, -2, -2, 0.05, 2, -2, -0.05, -2, -2, 0.05, 2, -2, -0.05, 2, -2, -0.05, -2, 2, 0.05, 2, -2, 0.05, 2, 2, 0.05, -2, -2, 0.05, 2, -2, 0.05, -2, 2, 0.05, -2, -2, -0.05, 2, 2, -0.05, 2, -2, -0.05, -2, 2, -0.05, 2, 2, -0.05, -2, -2, -0.05, -2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_upl03"]
-albedo_color = Color(0.0842138, 0.44373, 0.0999986, 1)
+transparency = 1
+albedo_color = Color(0.0823529, 0.443137, 0.0980392, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_05dan"]
 material = SubResource("StandardMaterial3D_upl03")
@@ -35,3 +40,9 @@ mesh = SubResource("BoxMesh_05dan")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Turret/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_05dan")
+
+[node name="Tree" parent="." instance=ExtResource("1_05dan")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.95134, 0, 0)
+
+[node name="Rocks" parent="." instance=ExtResource("2_pou1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.1305, 0, 0)
