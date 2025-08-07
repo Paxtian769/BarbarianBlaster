@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://dw8ffyo73vxya"]
+[gd_scene load_steps=16 format=3 uid="uid://dw8ffyo73vxya"]
 
 [ext_resource type="PackedScene" uid="uid://dpm3hgf0vp4qj" path="res://RayPickerCamera/ray_picker_camera.tscn" id="1_0a5y4"]
 [ext_resource type="MeshLibrary" uid="uid://dhtfnsbkni8ln" path="res://MeshLibraries/SpaceLibrary.tres" id="1_c57mx"]
-[ext_resource type="PackedScene" uid="uid://yac5m74ryf7x" path="res://EnemyScenes/barbarian_enemy.tscn" id="2_ctdcu"]
 [ext_resource type="Script" uid="uid://di1sh8xjcsto2" path="res://path_3d.gd" id="2_reens"]
 [ext_resource type="PackedScene" uid="uid://bo8il7peb3m0n" path="res://base.tscn" id="3_646pq"]
 [ext_resource type="Script" uid="uid://cthk312r4kwna" path="res://turret_manager.gd" id="6_8rhms"]
 [ext_resource type="PackedScene" uid="uid://dvwcvy43gysxe" path="res://Turret/turret.tscn" id="7_ucx4l"]
 [ext_resource type="Script" uid="uid://bwfb6qdokers2" path="res://bank_control.gd" id="8_agx4c"]
+[ext_resource type="PackedScene" uid="uid://c2mm4bhx25d8g" path="res://UserInterface/victory_layer.tscn" id="9_a5rkb"]
+[ext_resource type="PackedScene" uid="uid://d1x2i72ysrjm5" path="res://DifficultyManager/difficulty_manager.tscn" id="9_x6ek4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s4aeo"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -114,9 +115,6 @@ path_joined = false
 [node name="SpawnTimer" type="Timer" parent="Path3D"]
 autostart = true
 
-[node name="barbarian_enemy" parent="Path3D" instance=ExtResource("2_ctdcu")]
-transform = Transform3D(0.0128468, 0, -0.999909, 0, 1, 0, 0.999909, 0, 0.0128468, 0, 0, 0)
-
 [node name="Base" parent="." instance=ExtResource("3_646pq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -6)
 
@@ -139,11 +137,18 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 script = ExtResource("8_agx4c")
 
-[node name="Label" type="Label" parent="BankControl"]
+[node name="GoldLabel" type="Label" parent="BankControl"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "Gold: 50"
 label_settings = SubResource("LabelSettings_ucx4l")
+
+[node name="DifficultyManager" parent="." instance=ExtResource("9_x6ek4")]
+
+[node name="VictoryLayer" parent="." node_paths=PackedStringArray("base", "bank") instance=ExtResource("9_a5rkb")]
+visible = false
+base = NodePath("../Base")
+bank = NodePath("../BankControl")
 
 [connection signal="timeout" from="Path3D/SpawnTimer" to="Path3D" method="_spawn_new_enemy"]

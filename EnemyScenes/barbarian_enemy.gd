@@ -28,3 +28,7 @@ func take_damage(damage: int) -> void:
 	if health <= 0:
 		bank_control.gold += gold_value
 		queue_free()
+
+func set_max_health(new_max_health: int) -> void:
+	max_health = new_max_health
+	health = max_health

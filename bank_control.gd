@@ -1,14 +1,9 @@
 extends MarginContainer
 
 
-@onready var label: Label = $Label
-
+@onready var label: Label = $GoldLabel
 
 @export var starting_gold: int = 150
-
-
-func _ready() -> void:
-	gold = starting_gold
 
 
 var gold: int:
@@ -17,3 +12,7 @@ var gold: int:
 		if gold < 0:
 			gold = 0
 		label.text = "Gold: " + str(gold)
+
+
+func _ready() -> void:
+	gold = starting_gold
