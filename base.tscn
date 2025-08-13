@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bo8il7peb3m0n"]
+[gd_scene load_steps=4 format=3 uid="uid://bo8il7peb3m0n"]
 
 [ext_resource type="Script" uid="uid://i73ilqk6mbgs" path="res://base.gd" id="1_rpg24"]
 [ext_resource type="PackedScene" uid="uid://lclub1qd5tyg" path="res://Assets/Base.glb" id="2_3vi8l"]
+[ext_resource type="FontFile" uid="uid://6iqeuorratwg" path="res://Assets/Jost-VariableFont_wght.ttf" id="2_8rhti"]
 
 [node name="Base" type="Node3D" groups=["Base"]]
 script = ExtResource("1_rpg24")
@@ -10,6 +11,7 @@ script = ExtResource("1_rpg24")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
 billboard = 1
 text = "5"
+font = ExtResource("2_8rhti")
 font_size = 300
 outline_size = 60
 

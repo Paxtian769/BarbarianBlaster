@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2mm4bhx25d8g"]
+[gd_scene load_steps=7 format=3 uid="uid://c2mm4bhx25d8g"]
 
 [ext_resource type="Script" uid="uid://bxuhrlja233aw" path="res://UserInterface/victory_layer.gd" id="1_6k6vd"]
+[ext_resource type="FontFile" uid="uid://6iqeuorratwg" path="res://Assets/Jost-VariableFont_wght.ttf" id="2_o6yni"]
 [ext_resource type="Texture2D" uid="uid://beyk2yyanse4c" path="res://Assets/star.png" id="2_rt5eh"]
+
+[sub_resource type="Theme" id="Theme_o6yni"]
+default_font = ExtResource("2_o6yni")
 
 [sub_resource type="LabelSettings" id="LabelSettings_veim5"]
 font_size = 96
@@ -28,6 +32,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_o6yni")
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 custom_minimum_size = Vector2(400, 400)

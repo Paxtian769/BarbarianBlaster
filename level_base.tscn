@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dw8ffyo73vxya"]
+[gd_scene load_steps=19 format=3 uid="uid://dw8ffyo73vxya"]
 
 [ext_resource type="PackedScene" uid="uid://dpm3hgf0vp4qj" path="res://RayPickerCamera/ray_picker_camera.tscn" id="1_0a5y4"]
 [ext_resource type="MeshLibrary" uid="uid://dhtfnsbkni8ln" path="res://MeshLibraries/SpaceLibrary.tres" id="1_c57mx"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bo8il7peb3m0n" path="res://base.tscn" id="3_646pq"]
 [ext_resource type="Script" uid="uid://cthk312r4kwna" path="res://turret_manager.gd" id="6_8rhms"]
 [ext_resource type="PackedScene" uid="uid://dvwcvy43gysxe" path="res://Turret/turret.tscn" id="7_ucx4l"]
+[ext_resource type="FontFile" uid="uid://6iqeuorratwg" path="res://Assets/Jost-VariableFont_wght.ttf" id="8_a5rkb"]
 [ext_resource type="Script" uid="uid://bwfb6qdokers2" path="res://bank_control.gd" id="8_agx4c"]
 [ext_resource type="PackedScene" uid="uid://c2mm4bhx25d8g" path="res://UserInterface/victory_layer.tscn" id="9_a5rkb"]
 [ext_resource type="PackedScene" uid="uid://d1x2i72ysrjm5" path="res://DifficultyManager/difficulty_manager.tscn" id="9_x6ek4"]
@@ -36,7 +37,11 @@ point_count = 5
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x6ek4"]
 albedo_color = Color(0.552956, 0.552956, 0.552956, 1)
 
+[sub_resource type="Theme" id="Theme_a5rkb"]
+default_font = ExtResource("8_a5rkb")
+
 [sub_resource type="LabelSettings" id="LabelSettings_ucx4l"]
+font = ExtResource("8_a5rkb")
 font_size = 64
 outline_size = 16
 outline_color = Color(0, 0, 0, 1)
@@ -135,6 +140,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = SubResource("Theme_a5rkb")
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
